@@ -74,11 +74,11 @@
       <!-- nav links -->
       <div>
         <ul id="navbar">
-          <li><a class="active" href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'home' %}">Home</a></li>
           <li><a href="{% url 'collections' %}">Collections</a></li>
-          <li><a href="shop.html">Men</a></li>
-          <li><a href="contact.html">Women</a></li>
-          <!-- <li><a href="{% url 'loginPage' %}">Login/Signup</a></li> -->
+          <li><a href="{% url 'men' %}">Men</a></li>
+          <li><a href="{% url 'women' %}">Women</a></li>
+          <li><a href="{% url 'loginPage' %}">Login/Signup</a></li>
           <li id="rem-bag">
             <a href="{% url 'cart' %}"
               ><i class="fa-solid fa-bag-shopping"></i>
@@ -89,7 +89,7 @@
         </ul>
       </div>
       <div id="mobile">
-        <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+        <a href="{% url 'cart' %}"><i class="fa-solid fa-bag-shopping"></i></a>
         <i id="bar" class="fas fa-outdent"></i>
       </div>
       <!-- end of nav links -->

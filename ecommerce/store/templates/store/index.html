@@ -1,44 +1,47 @@
 {% extends 'store/base.html' %}
 {% load static %}
-{% block content %}  <body>
+
+{% block content %}
+<div>
     <!-- hero section -->
-    <section class="hero">
+    <section class="hero" style="background-image: url('{% static "/assests/products/mohammad-metri-E-0ON3VGrBc-unsplash.jpg"%}');">
       <div class="hero-container">
         <h4>Shop The Best Offer</h4>
         <h2>Great Prices, Great Deals</h2>
         <h1>On every Items</h1>
         <p>shop now and save more</p>
-        <button class="hero-btn">Shop Now</button>
+        <a href="{% url 'collections' %}"><button class="hero-btn">Shop Now</button></a>
       </div>
     </section>
     <!-- end of hero section -->
 
-    <!-- two pictures  -->
+    <!-- two pictures banner  -->
     <section id="banner" class="feature-section">
-      <div class="banner-shop">
+      <div class="banner-shop"  style="background-image: url('{% static "/assests/products/woman.jpg"%}');">
         <h4>VIEW NOW</h4>
         <h1>WOMEN</h1>
       </div>
-      <div id="shopee-men" class="banner-shop men">
+      <div id="shopee-men" class="banner-shop men" style="background-image: url('{% static "/assests/products/man.jpg"%}');">
         <h4>VIEW NOW</h4>
         <h1>MEN</h1>
       </div>
     </section>
     <!-- end of two pictures -->
-    <section id="sm-banner" class="feature-section">
-      <div class="banner-box">
+    <section id="sm-banner" class="feature-section" >
+      <div class="banner-box" style="background-image: url({% static "/assests/products/menglasses.webp"%});">
         <h4>crazy deals</h4>
         <h2>buy i get 1 free</h2>
-        <span>the best classic dress in son sale at EmmaKolade</span>
-        <button class="banner-btn">check now</button>
+        <span>the best classic glasses in on sale at EmmaKolade</span>
+        <a href="{% url 'collections' %}""><button class="banner-btn">check now</button></a>
       </div>
-      <div class="banner-box box2">
+      <div class="banner-box box2" style="background-image: url({% static "/assests/products/womenglasses.webp"%});">
         <h4>crazy deals</h4>
         <h2>buy i get 1 free</h2>
-        <span>the best classic dress is on sale at EmmaKolade</span>
-        <button class="banner-btn">check now</button>
+        <span>the best classic glasses is on sale at EmmaKolade</span>
+        <a href="{% url 'collections' %}"><button class="banner-btn">check now</button></a>
       </div>
     </section>
-  </body>
-{% endblock content %}
+    
+  </div>
+  {% endblock content %}
 

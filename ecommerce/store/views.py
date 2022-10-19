@@ -152,3 +152,11 @@ def processOrder(request):
 	return JsonResponse('Payment Complete', safe=False)
 
 
+def menPage(request):
+	context = {}
+	return render(request, 'store/men.html', context)
+
+def womenPage(request):
+	context = {}
+	return render(request, 'store/women.html', context)
+

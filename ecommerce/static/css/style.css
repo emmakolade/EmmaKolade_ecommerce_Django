@@ -115,8 +115,10 @@ body {
   height: 90vh;
   position: relative;
   margin: 0px 30px;
-  background: url("/assests/products/mohammad-metri-E-0ON3VGrBc-unsplash.jpg")
-    center/cover no-repeat;
+  /*background: url("/assests/products/mohammad-metri-E-0ON3VGrBc-unsplash.jpg")
+    center/cover no-repeat;*/
+  background-size: cover;
+  background-position: center;
 }
 .hero-container {
   position: absolute;
@@ -226,14 +228,6 @@ body {
   font-size: 30px;
 }
 
-/*#hide1 {
-  visibility: hidden;
-}
-
-#cart-hide:hover + #hide {
-  visibility: visible;
-  color: darkgray;
-}*/
 
 .pagination {
   text-decoration: none;
@@ -259,6 +253,7 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   cursor: pointer;
+  text-decoration: none;
 }
 #banner .banner-shop {
   display: flex;
@@ -270,8 +265,9 @@ body {
   background-position: center;
   padding: 30px;
 }
-#banner .men {
-  background-image: url("/assests/products/man.jpg");
+
+.linked{
+  text-decoration: none;
 }
 /* end of banner men&women  */
 
@@ -391,6 +387,7 @@ body {
 
 .news-btn {
   white-space: nowrap;
+  display: block;
 }
 /* end of newsletter */
 
@@ -649,131 +646,6 @@ footer {
 }
 
 /* cart page  */
-
-#cart table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  white-space: nowrap;
-}
-#cart table img {
-  width: 100px;
-}
-#cart table td:nth-child(1) {
-  width: 100px;
-  text-align: center;
-}
-#cart table td:nth-child(2) {
-  width: 250px;
-  text-align: center;
-}
-#cart table td:nth-child(3) {
-  width: 100px;
-  text-align: center;
-}
-#cart table td:nth-child(4) {
-  width: 150px;
-  text-align: center;
-}
-#cart table td:nth-child(4) input {
-  width: 50px;
-  padding: 10px 5px 10px 15px;
-}
-#cart table td:nth-child(5) {
-  width: 150px;
-  text-align: center;
-}
-
-#cart table td:nth-child(6) {
-  width: 100px;
-  text-align: center;
-}
-#cart table thead {
-  border-bottom: 1px solid black;
-}
-#cart table thead td {
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 13px;
-  padding: 18px 0;
-}
-#cart {
-  width: 100%;
-}
-
-/* #cart {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-} */
-
-#order-sum {
-  margin: 0px;
-}
-#subtotal {
-  width: 30%;
-  margin-bottom: 30px;
-  /* border: 1px solid; */
-  padding: 30px;
-}
-#subtotal table {
-  /* border-collapse: collapse; */
-  width: 100%;
-  margin-bottom: 20px;
-}
-#subtotal table td {
-  width: 100%;
-  padding: 20px;
-}
-#subtotal h3 {
-  padding-top: 30px;
-  padding-bottom: 15px;
-}
-#subtotal input {
-  padding: 10px 20px;
-  /* outline: none; */
-  padding: 10px;
-  font-size: 14px;
-}
-/* end of cart page  */
-
-/* cart */
-
-/* html,
-html a {
-  -webkit-font-smoothing: antialiased;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-} */
-
-/* body {
-  background-color: #fff;
-  color: #666;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 62.5%;
-  margin: 0 auto;
-}
-
-a {
-  border: 0 none;
-  outline: 0;
-  text-decoration: none;
-} */
-
-/* strong {
-  font-weight: bold;
-} */
-
-/* p {
-  margin: 0.75rem 0 0;
-} */
-
-/*  h1 {
-  font-size: 0.75rem;
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
-} */
-
 .quantity input,
 .basket-module input,
 .remove button,
@@ -825,11 +697,8 @@ a {
   content: "\20A6";
 }
 
-.hide {
-  display: none;
-}
 
-main {
+ #main {
   clear: both;
   font-size: 0.75rem;
   /* margin: 0 auto; */
@@ -1089,6 +958,8 @@ aside {
   height: 34px;
   width: 100%;
 }
+/* end of cart page  */
+
 
 @media screen and (max-width: 640px) {
   aside,
@@ -1139,45 +1010,28 @@ aside {
   }
 }
 
-/* @media screen and (min-width: 641px) and (max-width: 960px) {
-  aside {
-    padding: 0 1rem 0 0;
-  }
-  .summary {
-    width: 28%;
-  }
-} */
-
-/* @media screen and (max-width: 960px) {
-  main {
-    width: 100%;
-  }
-  .product-det {
-    padding: 0 1rem;
-  }
-} */
 
 /*checkout form*/
 .row {
-  display: -ms-flexbox; /* IE10 */
+  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   margin: 0 -16px;
 }
 
 .col-25 {
-  -ms-flex: 25%; /* IE10 */
+  -ms-flex: 25%;
   flex: 25%;
 }
 
 .col-50 {
-  -ms-flex: 50%; /* IE10 */
+  -ms-flex: 50%;
   flex: 50%;
 }
 
 .col-75 {
-  -ms-flex: 75%; /* IE10 */
+  -ms-flex: 75%;
   flex: 75%;
 }
 
@@ -1215,7 +1069,7 @@ label {
 }
 
 .btn-check {
-  background-color: #04AA6D;
+  background-color: gray;
   color: white;
   padding: 12px;
   margin: 10px 0;
@@ -1227,7 +1081,7 @@ label {
 }
 
 .btn-check:hover {
-  background-color: #45a049;
+  background-color: darkgrey;
 }
 
 span.pprice {
@@ -1235,15 +1089,6 @@ span.pprice {
   color: grey;
 }
 
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
-/*@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25 {
-    margin-bottom: 20px;
-  }
-}*/
 
 /*end of checkout form*/
 
