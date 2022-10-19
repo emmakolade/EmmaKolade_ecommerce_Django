@@ -25,24 +25,25 @@ def signUpPage(request):
 		if form.is_valid(): #validates the form
 			form.save()
 			user = form.cleaned_data.get('username')
+
 			messages.success(request, 'Account Created Successfully for ' + user )
 			return redirect('loginPage')
 	context = {'form': form}
 	return render(request, 'store/register.html', context)
 
 def loginPage(request):
+
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 		user = authenticate(request, username=username, password=password)
+
 		if user is not None:
 			login(request, user)
 			return redirect('home')
-	else:
-		messages.info(request, 'username or password is not correct')
-		return render(request, 'store/login.html', context)
-
-
+		else:
+			messages.info(request, 'username or password is not correct')
+			# return render(request, 'store/login.html', context)
 
 	context = {}
 	return render(request, 'store/login.html', context)
@@ -53,6 +54,7 @@ def logoutUser(request):
 
 
 def collections(request):
+
 	data = cartData(request)
 	cartItems = data['cartItems']
 
@@ -148,3 +150,5 @@ def processOrder(request):
 		)
 
 	return JsonResponse('Payment Complete', safe=False)
+
+
