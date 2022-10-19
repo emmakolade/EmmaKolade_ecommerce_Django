@@ -1,46 +1,6 @@
+{% extends 'store/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EmmaKolade | Home</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <!-- font aweseome icon cdn link -->
-    <script
-      src="https://kit.fontawesome.com/21fe399584.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <!-- header section -->
-    <section id="header">
-      <a href="#"
-        ><img src="{% static 'assests/EmmaKolade Logo New.png' %}" class="logo" alt="Logo"
-      /></a>
-      <!-- nav links -->
-      <div>
-        <ul id="navbar">
-          <li><a class="active" href="index.html">Home</a></li>
-          <li><a href="collections.html">Collections</a></li>
-          <li><a href="shop.html">Men</a></li>
-          <li><a href="contact.html">Women</a></li>
-          <li><a href="login.html">Login/Signup</a></li>
-          <li id="rem-bag">
-            <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
-          </li>
-          <a href="#" id="close-side"><i class="fa-solid fa-xmark"></i></a>
-        </ul>
-      </div>
-      <div id="mobile">
-        <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
-        <i id="bar" class="fas fa-outdent"></i>
-      </div>
-      <!-- end of nav links -->
-    </section>
-    <!-- end of header section  -->
-
+{% block content %}  <body>
     <!-- hero section -->
     <section class="hero">
       <div class="hero-container">
@@ -79,67 +39,6 @@
         <button class="banner-btn">check now</button>
       </div>
     </section>
-    <!-- newsletter signup -->
-    <section class="newsletter" class="feature-section">
-      <div class="newstext">
-        <h4>EmmaKolade Newsletter &nbsp</h4>
-        <p>signup to recieve the latest on emmakolade news and updates &nbsp</p>
-        <div class="signup">
-          <input type="text" placeholder="email address" />
-          <button class="news-btn">Sign Up</button>
-        </div>
-      </div>
-    </section>
-    <!-- end of newsletter signup -->
-
-    <!-- section footer -->
-    <section id="section-footer" class="feature-section">
-      <div class="col">
-        <h2>CUSTOMER SERVICE</h2>
-        <a href="#">CONTACT US</a>
-        <a href="#">FAQ</a>
-        <a href="#">SHIPPING AND RETURNS</a>
-      </div>
-      <div class="col">
-        <h2>THE COMPANY</h2>
-        <a href="#">ABOUT EMMAKOLADE</a>
-        <a href="#">PRIVACY POLICY</a>
-        <a href="#">NEWS</a>
-      </div>
-      <div class="col">
-        <h2>SERVICES</h2>
-        <a href="#">STYLE CONSULTANTS</a>
-        <a href="#">MADE TO MEASURE</a>
-        <a href="#">LAUNDRY</a>
-      </div>
-      <div id="social" class="col">
-        <h2>We're Here For You</h2>
-        <h4>Follow us to discover new collections,</h4>
-        <h4>fresh arivals and exclusive offers</h4>
-        <div id="fa-icon">
-          <a href="https://facebook.com/emmkolade"
-            ><i class="fa-brands fa-facebook-f a-icon"></i
-          ></a>
-          <a href="https://twitter.com/emmakolade">
-            <i class="fa-brands fa-twitter a-icon"></i
-          ></a>
-          <a href="https://instagram.com/emmakolade"
-            ><i class="fa-brands fa-instagram a-icon"></i
-          ></a>
-        </div>
-      </div>
-    </section>
-    <!-- end of section footer -->
-
-    <!-- footer -->
-    <footer>
-      <div class="copyright">
-        <hr />
-        &copy; EMMAKOLADE <span>|MADE IN NIGERIA|</span>
-      </div>
-    </footer>
-    <!-- end of footer -->
-    <script src="/script/detail.js"></script>
-    <script src="/script/script.js"></script>
   </body>
-</html>
+{% endblock content %}
+
