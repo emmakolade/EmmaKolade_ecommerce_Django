@@ -1,0 +1,24 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+<!-- product section -->
+    <section id="product" class="feature-section">
+      <h2>COLLECTIONS</h2>
+      <p>Collections for Men and Women</p>
+
+      <div class="product-container">
+        {% for product in products %}
+        <div class="pro">
+          <img onclick="window.location.href='productdetail.html';" src="{{product.CollectionsURL}}" alt="product 1" />
+
+          <div class="des">
+            <h5>{{product.name}}</h5>
+            <h4 class="price-tag">&#8358 {{product.price|floatformat:2}}</h4>
+          </div>
+          <i data-product={{product.id}} data-action="add" class="fa-solid fa-bag-shopping product-cart update-cart"></i>
+        </div>
+        {% endfor %}
+      </div>
+   </section>
+    <!-- end of product section -->
+    {% endblock content %}

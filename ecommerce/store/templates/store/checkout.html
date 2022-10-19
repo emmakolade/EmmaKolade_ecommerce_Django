@@ -1,0 +1,161 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+ <!--  billing addresss -->
+
+<div class="row">
+  <div class="col-75">
+    <div class="container">
+
+      <form id="paymentForm">
+
+        <div class="row">
+          <div class="col-50">
+            <h3>Billing Address</h3>
+            <label for="fname"><i class="fa fa-user"></i> name</label>
+            <input type="text" id="fname" name="name" placeholder="Full Name">
+            <label for="email"><i class="fa fa-envelope"></i> email address</label>
+            <input type="text" id="email" name="email" placeholder="email address">
+            <label for="adr"><i class="fa fa-address-card-o"></i> address</label>
+            <input type="text" id="adr" name="address" placeholder="Address">
+
+            <div class="row">
+              <div class="col-50">
+                <label for="state">state</label>
+                <input type="text" id="state" name="state" placeholder="NY">
+              </div>
+              <div class="col-50">
+                <label for="zip">zipcode</label>
+                <input type="text" id="zip" name="zipcode" placeholder="10001">
+              </div>
+              <div class="col-50">
+                <label for="total-amount">Total Amount</label>
+                <input type="text" id="amount" name="t-amount" value="{{order.get_cart_total|floatformat:2}}" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <label>
+          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+        </label>
+        <input id="form-btnn" type="submit" value="Continue to Payment" class="btn-check">
+      </form>
+
+    </div>
+  </div>
+<!-- end of billing address-->
+  <div class="col-25">
+    <div class="container">
+      <h4>Cart
+        <span class="pprice" style="color:black">
+          <i class="fa fa-shopping-cart"></i>
+          <b>{{order.get_cart_items}}</b>
+        </span>
+      </h4>
+      {% for item in items %}
+      <p><a href="#">{{item.product.name}}</a> <span> x{{item.quantity}}</span> <span class="pprice">{{item.get_total}}</span></p>
+      {% endfor %}
+
+      <hr>
+      <p>Total <span class="pprice" style="color:black"><b>{{order.get_cart_total|floatformat:2}}</b></span></p>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var shipping = '{{order.shipping}}'
+
+  // if(shipping == 'False'){
+  //   document.getElementById('').innerHTML = ''
+  // }
+  var form = document.getElementById('paymentForm')
+  form.addEventListener('submit', function(e){
+    e.preventDefault() // prevents the form from performing its normal action
+    console.log('form submitted and checkout initiated...')
+    // payWithPaystack()
+    // submitFormData()
+    // document.getElementById('form-btnn').classList.add('hidden')
+    // document.getElementById('payment-info').classList.remove('hidden')
+
+  })
+  // document.getElementById('form-btnn').addEventListener('click', function(e){
+  //   // e.preventDefault()
+  //   submitFormData()
+  // })
+  var total = '{{order.get_cart_total}}'
+
+  function submitFormData(){
+    console.log('continue to payment clicked')
+
+    var userFormData = {
+      'name': null,
+      'email': null,
+      'total': total,
+    }
+
+    var shippingInfo = {
+      'address': null,
+      'state': null,
+      'zipcode': null,
+    }
+    if(shipping != 'False'){
+      shippingInfo.address = form.address.value
+      shippingInfo.state = form.state.value
+      shippingInfo.zipcode = form.zipcode.value
+    }
+
+    if(user == 'AnonymousUser'){
+      userFormData.name = form.name.value
+      userFormData.email = form.email.value
+    }
+
+    var url = '/process_order/'
+    fetch(url,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+      },
+      body:JSON.stringify({'form':userFormData, 'shipping': shippingInfo,})
+    })
+    .then((response) => response.json())
+    .then((data) =>{
+      console.log('Success:', data);
+      alert('Transaction Completed');
+
+      cart = {}
+      document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+      window.location.href = "{% url 'collections' %}"
+    })
+  }
+</script>
+
+<!-- paystack inline payment gateway -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script type="text/javascript">
+var paymentForm = document.getElementById('paymentForm');
+paymentForm.addEventListener('submit', payWithPaystack, false);
+function payWithPaystack() {
+  var handler = PaystackPop.setup({
+    key: 'pk_test_2539bb2a8c982c5e9e52e8986c89c1ae8c0bb555', // Replace with your public key
+    email: document.getElementById('email').value,
+    amount: document.getElementById('amount').value * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+    currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
+    ref: '', // Replace with a reference you generated
+    callback: function(response) {
+      //this happens after the payment is completed successfully
+      // var reference = response.reference;
+      // alert('Payment complete! Reference: ' + reference);
+      submitFormData()
+      // Make an AJAX call to your server with the reference to verify the transaction
+    },
+    onClose: function() {
+      alert('Transaction was not completed, window closed.');
+    },
+  });
+  handler.openIframe();
+}
+</script>
+{% endblock content %}
