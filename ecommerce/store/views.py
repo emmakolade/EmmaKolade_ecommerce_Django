@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 from .models import *
-from . utils import cookieCart, cartData, guestOrder
+from .utils import cookieCart, cartData, guestOrder
 
 # Create your views here.
 def home(request):
@@ -23,10 +23,14 @@ def signUpPage(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid(): #validates the form
-			form.save()
-			user = form.cleaned_data.get('username')
+			user = form.save()
 
-			messages.success(request, 'Account Created Successfully for ' + user )
+			username = form.cleaned_data.get('username')
+			Customer.objects.create(
+				user=user,
+				) #creates a customer profile whenever they sign up.
+
+			messages.success(request, 'Account Created Successfully for ' + username )
 			return redirect('loginPage')
 	context = {'form': form}
 	return render(request, 'store/register.html', context)
@@ -44,6 +48,7 @@ def loginPage(request):
 		else:
 			messages.info(request, 'username or password is not correct')
 			# return render(request, 'store/login.html', context)
+
 
 	context = {}
 	return render(request, 'store/login.html', context)

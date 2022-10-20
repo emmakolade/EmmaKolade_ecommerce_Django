@@ -1,6 +1,8 @@
 import json
 from .models import *
 
+from django.core.exceptions import ObjectDoesNotExist
+
 
 def cookieCart(request):
 	try:
@@ -48,6 +50,8 @@ def cookieCart(request):
 
 def cartData(request):
 	if request.user.is_authenticated:
+		# if hasattr(request.user, 'customer'):
+		# customer = User.objects.get(pk=request.user.id).customer
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer=customer, complete=False) #to either create and order or get the customer order if it exist.
 		items = order.orderitem_set.all()
@@ -58,8 +62,9 @@ def cartData(request):
 		cartItems = cookieData['cartItems']
 		order = cookieData['order']
 		items = cookieData['items']
+	# else:
+	# 	items = []
 	return {'cartItems': cartItems, 'order': order, 'items': items}
-
 
 def guestOrder(request, data):
 	print('user is not logged in')
