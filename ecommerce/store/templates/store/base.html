@@ -78,7 +78,7 @@
           <li><a href="{% url 'collections' %}">Collections</a></li>
           <li><a href="{% url 'men' %}">Men</a></li>
           <li><a href="{% url 'women' %}">Women</a></li>
-          <li><a href="{% url 'loginPage' %}">Login/Signup</a></li>
+          <li><a href="{% url 'login' %}">Login/Signup</a></li>
           <li id="rem-bag">
             <a href="{% url 'cart' %}"
               ><i class="fa-solid fa-bag-shopping"></i>
@@ -96,7 +96,11 @@
     </section>
     <!-- end of header section  -->
 
-    <div class="base-container">{% block content %} {% endblock content %}</div>
+    <div class="base-container">
+      {% block content %}
+
+      {% endblock content %}
+    </div>
     <!-- newsletter signup -->
     <section class="newsletter" class="feature-section">
       <div class="newstext">

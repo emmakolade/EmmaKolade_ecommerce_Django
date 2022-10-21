@@ -20,7 +20,7 @@ def cookieCart(request):
 	cartItems = order['get_cart_items']
 
 	for i in cart:
-		# to ensure that nothing goes wrong with the code below i will usee the try/except
+		# to ensure that nothing goes wrong with the code below i will use the try/except
 		try:
 			cartItems += cart[i]['quantity']
 
