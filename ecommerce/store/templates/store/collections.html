@@ -18,9 +18,10 @@
 
           <div class="des">
             <h5>{{product.name}}</h5>
-            <h4 class="price-tag">&#8358 {{product.price|floatformat:2}}</h4>
+            <h4 class="price-tag">&#36 {{product.price|floatformat:2}}</h4>
           </div>
           <i onClick="showMessage()" data-product={{product.id}} data-action="add" class="fa-solid fa-bag-shopping product-cart update-cart"></i>
+          <div class="cart-add">add to cart</div>
         </div>
         {% endfor %}
       </div>

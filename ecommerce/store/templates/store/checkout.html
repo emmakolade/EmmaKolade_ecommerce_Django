@@ -13,26 +13,26 @@
         <div class="row">
           <div class="col-50">
             <h3>Billing Address</h3>
-            <label for="fname"><i class="fa fa-user"></i> name</label>
-            <input type="text" id="fname" name="name" placeholder="Full Name">
-            <label for="email"><i class="fa fa-envelope"></i> email address</label>
+            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+            <input type="text" id="fname" name="name" placeholder="full name">
+            <label for="email"><i class="fa fa-envelope"></i> Email address</label>
             <input type="text" id="email" name="email" placeholder="email address">
-            <label for="adr"><i class="fa fa-address-card-o"></i> address</label>
-            <input type="text" id="adr" name="address" placeholder="Address">
+            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+            <input type="text" id="adr" name="address" placeholder="address">
 
             <div class="row">
               <div class="col-50">
                 <label for="state">state</label>
-                <input type="text" id="state" name="state" placeholder="NY">
+                <input type="text" id="state" name="state" placeholder="state">
               </div>
               <div class="col-50">
                 <label for="zip">zipcode</label>
-                <input type="text" id="zip" name="zipcode" placeholder="10001">
+                <input type="text" id="zip" name="zipcode" placeholder="100001">
               </div>
-              <div class="col-50">
+              <!-- <div class="col-50">
                 <label for="total-amount">Total Amount</label>
                 <input type="text" id="amount" name="t-amount" value="{{order.get_cart_total|floatformat:2}}" readonly>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -41,7 +41,8 @@
         <label>
           <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
         </label>
-        <input id="form-btnn" type="submit" value="Continue to Payment" class="btn-check">
+        <!-- <div id="paypal-button-container"></div> -->
+        <!-- <input id="form-btnn" type="submit" value="Continue to Payment" class="btn-check"> -->
       </form>
 
     </div>
@@ -49,21 +50,68 @@
 <!-- end of billing address-->
   <div class="col-25">
     <div class="container">
-      <h4>Cart
+      <h5>Cart
         <span class="pprice" style="color:gray">
           <i class="fa fa-shopping-cart"></i>
           <b>{{order.get_cart_items}}</b>
         </span>
-      </h4>
+      </h5>
       {% for item in items %}
-      <p><a href="#">{{item.product.name}}</a> <span> x{{item.quantity}}</span> <span class="pprice">{{item.get_total}}</span></p>
+      <p>{{item.product.name}}<span>({{item.quantity}})</span> <span class="pprice">{{item.get_total}}</span></p>
       {% endfor %}
 
       <hr>
       <p>Total <span class="pprice" style="color:black"><b>{{order.get_cart_total|floatformat:2}}</b></span></p>
     </div>
+    <div id="paypal-button-container"></div>
   </div>
 </div>
+
+<!-- paypal -->
+<script src="https://www.paypal.com/sdk/js?client-id=AeihD4FcUxXe16YZnVIP55m7kaIOpDWyKSKJYaHCg9epONdpaxEgwZnE8oEKkbJbSkr6S6pjCb74t8mE&currency=USD"></script>
+
+<script>
+  var total = '{{order.get_cart_total}}'
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+          style:{
+            color: 'black',
+          },
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: parseFloat(total).toFixed(2)
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+                    // Successful capture! For demo purposes:
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                    submitFormData()
+
+                    // alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                    // Replace the above to show a success message within this page, e.g.
+                    // const element = document.getElementById('paypal-button-container');
+                    // element.innerHTML = '';
+                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
+<!-- end of paypal -->
 <script type="text/javascript">
   var shipping = '{{order.shipping}}'
 
@@ -133,7 +181,7 @@
 </script>
 
 <!-- paystack inline payment gateway -->
-<script src="https://js.paystack.co/v1/inline.js"></script>
+<!-- <script src="https://js.paystack.co/v1/inline.js"></script>
 <script type="text/javascript">
 var paymentForm = document.getElementById('paymentForm');
 paymentForm.addEventListener('submit', payWithPaystack, false);
@@ -157,5 +205,5 @@ function payWithPaystack() {
   });
   handler.openIframe();
 }
-</script>
+</script> -->
 {% endblock content %}

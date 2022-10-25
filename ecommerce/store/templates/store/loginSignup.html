@@ -49,8 +49,8 @@
           </div>
           <span>or use your account</span>
           <input type="text" name="username" placeholder="username" class="form-control" />
-          <input type="text" name="password" placeholder="password" class="form-control"/>
-          <a href="#">Forgot your password?</a>
+          <input type="password" name="password" placeholder="password" class="form-control"/>
+          <a href="{% url 'reset_password' %}">Forgot your password?</a>
           <button>Sign In</button>
         </form>
       </div>
@@ -75,7 +75,7 @@
     <script type="text/javascript" src="{% static 'js/form.js'%}"></script>
 
     <script>
-    // vanilla JS is used to take care of the placeholder values 
+    // vanilla JS is used to take care of the placeholder values
 
       //Query All input fields
       var form_fields = document.getElementsByTagName("input");

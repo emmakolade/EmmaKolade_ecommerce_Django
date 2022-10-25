@@ -8,8 +8,12 @@ from .form import SignUpForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
+from django.contrib.auth.decorators import login_required
+
 from .models import *
 from .utils import cookieCart, cartData, guestOrder
+
+from django.views import View
 
 # Create your views here.
 def home(request):
@@ -17,111 +21,93 @@ def home(request):
 	context = {}
 	return render(request, 'store/index.html', context)
 
+# @login_required(login_url= 'home')
 def loginRegister(request):
-	form = SignUpForm()
+	if request.user.is_authenticated:
+		return redirect('home')
+	else:
+		form = SignUpForm()
 
-	if request.method == 'POST':
-		form = SignUpForm(request.POST)
-		if form.is_valid(): #validates the form
-			user = form.save()
+		if request.method == 'POST':
+			# register/signup
+			form = SignUpForm(request.POST)
+			if form.is_valid(): # validates the form
+				user = form.save()
 
-			username = form.cleaned_data.get('username')
-			Customer.objects.create(
-				user=user,
-				) #creates a customer profile whenever they sign up.
+				username = form.cleaned_data.get('username')
+				Customer.objects.create(
+					user=user,
+					name=user.username
+					) # creates a customer profile whenever they sign up.
 
-			messages.success(request, 'Account Created Successfully for ' + username )
-		# login
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		user = authenticate(request, username=username, password=password)
+				messages.success(request, 'Account Created Successfully for ' + username )
+			# login
+			username = request.POST.get('username')
+			password = request.POST.get('password')
+			user = authenticate(request, username=username, password=password)
 
-		if user is not None:
-			login(request, user)
-			return redirect('home')
-		else:
-			messages.info(request, 'username or password is not correct')
+			if user is not None:
+				login(request, user)
+				return redirect('home')
+			else:
+				messages.info(request, 'credentials invalid')
 
-	context = {'form': form}
-	return render(request, 'store/loginSignup.html', context)
+		context = {'form': form}
+		return render(request, 'store/loginSignup.html', context)
 
-# def signUpPage(request):
-	form = SignUpForm()
-
-	if request.method == 'POST':
-		form = SignUpForm(request.POST)
-		if form.is_valid(): #validates the form
-			user = form.save()
-
-			username = form.cleaned_data.get('username')
-			Customer.objects.create(
-				user=user,
-				) #creates a customer profile whenever they sign up.
-
-			messages.success(request, 'Account Created Successfully for ' + username )
-			return redirect('loginPage')
-	context = {'form': form}
-	return render(request, 'store/register.html', context)
-
-def loginPage(request):
-
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		user = authenticate(request, username=username, password=password)
-
-		if user is not None:
-			login(request, user)
-			return redirect('home')
-		else:
-			messages.info(request, 'username or password is not correct')
-			# return render(request, 'store/login.html', context)
-
-
-	context = {}
-	return render(request, 'store/login.html', context)
 
 def logoutUser(request):
 	logout(request)
-	return redirect('login')
+	return redirect('home')
+
+class collections(View):
+
+	def get(self, request):
+		data = cartData(request)
+		cartItems = data['cartItems']
+		products = Product.objects.all()
+		context = {'products':products, 'cartItems': cartItems}
+		return render(request, 'store/collections.html', context)
+
+# def collections(request):
+
+# 	data = cartData(request)
+# 	cartItems = data['cartItems']
+
+# 	products = Product.objects.all()
+# 	context = {'products':products, 'cartItems': cartItems}
+# 	return render(request, 'store/collections.html', context)
+
+class cart(View):
+
+	def get(self, request):
+		data = cartData(request)
+		cartItems = data['cartItems']
+		order = data['order']
+		items = data['items']
+
+		context = {
+			'items': items,
+			'order': order,
+			'cartItems': cartItems,
+		}
+		return render(request, 'store/cart.html', context)
+
+class checkout(View):
+	def get(self, request):
+
+		data = cartData(request)
+		cartItems = data['cartItems']
+		order = data['order']
+		items = data['items']
 
 
-def collections(request):
-
-	data = cartData(request)
-	cartItems = data['cartItems']
-
-	products = Product.objects.all()
-	context = {'products':products, 'cartItems': cartItems}
-	return render(request, 'store/collections.html', context)
-
-def cart(request):
-	data = cartData(request)
-	cartItems = data['cartItems']
-	order = data['order']
-	items = data['items']
-
-	context = {
-		'items': items,
-		'order': order,
-		'cartItems': cartItems,
-	}
-	return render(request, 'store/cart.html', context)
-
-def checkout(request):
-
-	data = cartData(request)
-	cartItems = data['cartItems']
-	order = data['order']
-	items = data['items']
-
-
-	context = {
-		'items': items,
-		'order': order,
-		'cartItems': cartItems,
-	}
-	return render(request, 'store/checkout.html', context)
+		context = {
+			'items': items,
+			'order': order,
+			'cartItems': cartItems,
+		}
+		return render(request, 'store/checkout.html', context)
 
 def addedItem(request):
 	data = json.loads(request.body)

@@ -9,7 +9,7 @@ if (bar) {
   });
 }
 
-// to make the xmark button clickable 
+// to make the xmark button clickable
 if (close) {
   close.addEventListener("click", () => {
     nav.classList.remove("activee");

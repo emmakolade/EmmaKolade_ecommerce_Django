@@ -78,11 +78,15 @@
           <li><a href="{% url 'collections' %}">Collections</a></li>
           <li><a href="{% url 'men' %}">Men</a></li>
           <li><a href="{% url 'women' %}">Women</a></li>
+          {% if user.is_authenticated %}
+          <li> <span class="user-auth" >Hi, {{request.user}}</span><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
           <li><a href="{% url 'login' %}">Login/Signup</a></li>
+          {% endif %}
           <li id="rem-bag">
             <a href="{% url 'cart' %}"
-              ><i class="fa-solid fa-bag-shopping"></i>
-              <p>{{cartItems}}</p></a
+              ><i class="fa-solid fa-bag-shopping"><sup class="cart-num">{{cartItems}}</sup></i>
+              </a
             >
           </li>
           <a href="#" id="close-side"><i class="fa-solid fa-xmark"></i></a>
@@ -107,7 +111,7 @@
         <h4>EmmaKolade Newsletter &nbsp</h4>
         <p>signup to recieve the latest on emmakolade news and updates &nbsp</p>
         <div class="signup">
-          <input type="text" placeholder="email address" />
+          <input class="signup-email" type="text" placeholder="email address" />
           <button class="news-btn">Sign Up</button>
         </div>
       </div>
