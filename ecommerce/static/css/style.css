@@ -38,7 +38,7 @@ body {
   width: 100%;
 }
 
-/* header */
+/* header and navbar*/
 #header {
   display: flex;
   align-items: center;
@@ -51,10 +51,6 @@ body {
   top: 0;
   left: 0;
 }
-
-/* .cart{
-  color: white;
-} */
 
 #navbar {
   display: flex;
@@ -79,7 +75,7 @@ body {
   position: relative;
 }
 #navbar li a {
-  text-decoration: none; /* removes the underline */
+  text-decoration: none;
   font-size: 17px;
   font-weight: 700;
   text-transform: uppercase;
@@ -87,34 +83,9 @@ body {
   transition: 0.7s ease; /*adds some smoothness to hover */
 }
 #navbar li a:hover {
-  color: darkgray;
-}
-#navbar li a.active {
-  color: orangered;
-}
-#navbar li a.active::after,
-#navbar li a:hover::after {
-  content: "";
-  width: 18%;
-  height: 2px;
-  background: orangered;
-  position: absolute;
-  bottom: -3px;
-  left: 40px;
-}
-#navbar li a.activ-e {
   color: orangered;
 }
 
-#navbar li a:hover::after {
-  content: "";
-  width: 18%;
-  height: 1.5px;
-  background: orangered;
-  position: absolute;
-  bottom: -3px;
-  left: 40px;
-}
 #mobile {
   display: none;
   align-items: center;
@@ -122,6 +93,9 @@ body {
 #close-side {
   display: none;
 }
+/* end of header and navbar*/
+
+
 /* hero container */
 .hero {
   height: 90vh;
@@ -154,7 +128,7 @@ body {
 }
 .hero p {
   color: black;
-  font-weight: 800;
+  font-weight: 700;
 }
 .hero-btn {
   background-color: #fff;
@@ -206,7 +180,6 @@ body {
   width: 23%;
   min-width: 250px;
   padding: 10px 12px; /*top&bottom left&right */
-  /* border: 1px solid rgba(70, 62, 221, 0.4); */
   border-radius: 2px;
   cursor: pointer;
   box-shadow: 20px 20px 54px rgba(70, 62, 221, 0.1); /* x, y, radius rgba */
@@ -279,7 +252,7 @@ body {
   flex-direction: column;
   min-width: 921.5px;
   height: 70vh;
-  background-image: url("/assests/products/woman.jpg");
+  /*background-image: url("/assests/products/woman.jpg");*/
   background-size: cover;
   background-position: center;
   padding: 30px;
@@ -289,6 +262,7 @@ body {
   text-decoration: none;
 }
 /* end of banner men&women  */
+
 
 /* small banner */
 #sm-banner {
@@ -350,6 +324,7 @@ body {
 }
 /* end of small banner */
 
+
 /* newsletter  */
 .newsletter {
   display: flex;
@@ -404,10 +379,10 @@ body {
   display: flex;
   padding-top: 30px;
 }
-.signup-email{
+/*.signup-email{
   min-width: 100%;
 }
-
+*/
 .news-btn {
   white-space: nowrap;
   background-color: darkgray;
@@ -539,7 +514,6 @@ footer {
   .hero {
     height: 70vh;
     padding: 0 80px;
-    /* background-position: top 30% right 30%; */
   }
   #banner .banner-shop {
     height: 60vh;
@@ -565,7 +539,7 @@ footer {
   .copyright hr {
     width: 750px;
   }
-  /*for checkout form*/
+  /* for checkout form*/
   .row {
     flex-direction: column-reverse;
   }
@@ -821,12 +795,19 @@ label {
 }
 
 .quantity-field {
-  background-color: #ccc;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  font-size: 0.625rem;
-  padding: 2px;
+  font-size: 0.75rem;
+  padding: 7px;
   width: 3.75rem;
+  font-weight: 700;
+}
+.update-cart{
+  border: 1px solid orangered;
+  border-radius: 2px;
+  font-weight: 800;
+  color: white;
+  background-color: orangered;
+  padding: 4px;
+
 }
 
 aside {

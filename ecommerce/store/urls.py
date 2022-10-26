@@ -16,6 +16,11 @@ urlpatterns = [
 	path('men/', views.menPage, name="men"),
 	path('women/', views.womenPage, name="women"),
 
+	path('subcribe/', views.subscribe, name="subscribe"),
+	path('social/signup/', views.siginRedirect, name="siginRedirect"),
+
+
+
 	#reset password
 	path('reset_password', auth_views.PasswordResetView.as_view(template_name="store/resetPassword.html"), name="reset_password"),
 

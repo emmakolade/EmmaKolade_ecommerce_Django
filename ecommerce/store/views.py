@@ -6,7 +6,7 @@ import datetime
 from django.contrib.auth.forms import UserCreationForm
 from .form import SignUpForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from django.contrib.auth.decorators import login_required
 
@@ -15,10 +15,22 @@ from .utils import cookieCart, cartData, guestOrder
 
 from django.views import View
 
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
+
 # Create your views here.
 def home(request):
+	data = cartData(request)
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
 
-	context = {}
+	context = {
+			'items': items,
+			'order': order,
+			'cartItems': cartItems,
+		}
 	return render(request, 'store/index.html', context)
 
 # @login_required(login_url= 'home')
@@ -61,7 +73,6 @@ def logoutUser(request):
 	return redirect('home')
 
 class collections(View):
-
 	def get(self, request):
 		data = cartData(request)
 		cartItems = data['cartItems']
@@ -79,7 +90,6 @@ class collections(View):
 # 	return render(request, 'store/collections.html', context)
 
 class cart(View):
-
 	def get(self, request):
 		data = cartData(request)
 		cartItems = data['cartItems']
@@ -171,6 +181,38 @@ def processOrder(request):
 	return JsonResponse('Payment Complete', safe=False)
 
 
+def subscribe(request):
+	if request.method == 'POST':
+		name = request.POST.get('name', None)
+		email = request.POST.get('email', None)
+
+		if not name or not email:
+			messages.error(request, "enter an appropraite email to subscribe")
+			return redirect('home')
+
+		if get_user_model().objects.filter(email=email).first():
+			messages.error(request, f"your email {email} has been used.")
+			return redirect(request.META.get("HTTP_REFERER", "home"))
+
+		# checks if the email is not in the subscribed list
+		subscribe_user = SubscribedUsers.objects.filter(email=email).first()
+		if subscribe_user:
+			messages.error(request, f"{email} email address is already subscriber.")
+			return redirect(request.META.get("HTTP_REFERER", "home"))
+		try:
+			validate_email(email)
+		except ValidationError as e:
+			messages.error(request, e.messages[0])
+			return redirect("home")
+
+		subscribe_model_instance = SubscribedUsers()
+		subscribe_model_instance.name = name
+		subscribe_model_instance.email = email
+		subscribe_model_instance.save()
+		messages.success(request, f' your email {email} was successfully subscribed to our newsletter!')
+		return redirect(request.META.get("HTTP_REFERER", "home"))
+
+
 def menPage(request):
 	context = {}
 	return render(request, 'store/men.html', context)
@@ -178,4 +220,9 @@ def menPage(request):
 def womenPage(request):
 	context = {}
 	return render(request, 'store/women.html', context)
+
+# all auth
+def siginRedirect(request):
+	messages.error(request, "something went wrong, it may be that you already have an account")
+	return redirect("home")
 

@@ -1,0 +1,47 @@
+{% if not user.is_authenticated %}
+<section class="">
+  <form action="{% url 'subscribe' %}" method="post">
+    <div class="row d-flex justify-content-center">
+      {% csrf_token %}
+
+      <div class="newstext">
+        <h4>EmmaKolade Newsletter &nbsp</h4>
+      </div>
+
+      <div class="newstext">
+        <p class="pt-2">Subscribe for our newsletter</p>
+      </div>
+
+      <div class="newstext">
+        <input class="signup-email" name="name" placeholder="Your Name" />
+      </div>
+
+      <div class="newstext">
+        <input
+          class="signup-email"
+          name="email"
+          type="email"
+          placeholder="Email address"
+        />
+      </div>
+
+      <div class="newstext">
+        <button type="submit" class="news-btn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</section>
+{% endif %} 
+
+{% comment %}
+<section class="newsletter" class="feature-section">
+  <div class="newstext">
+    <h4>EmmaKolade Newsletter &nbsp</h4>
+    <p>signup to recieve the latest on emmakolade news and updates &nbsp</p>
+    <div class="signup">
+      <input class="signup-email" type="text" placeholder="email address" />
+      <button class="news-btn">Sign Up</button>
+    </div>
+  </div>
+</section>
+{% endcomment %}

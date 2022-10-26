@@ -1,92 +1,98 @@
-{% load static %}
+{% load static %} {% load socialaccount %}
 <script
-      src="https://kit.fontawesome.com/21fe399584.js"
-      crossorigin="anonymous"
-    ></script>
+  src="https://kit.fontawesome.com/21fe399584.js"
+  crossorigin="anonymous"
+></script>
 <link rel="stylesheet" href="{% static 'css/form.css' %}" />
-    <div class="container" id="container">
-      <div class="form-container sign-up-container">
-        <form method="POST" action="">
-          <h1>Create Account</h1>
-          <!-- <p> It's quick and easy. </p> -->
-          <div class="social-container">
-            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <span>or use your email for registration</span>
-          <!-- django default form -->
-          {% csrf_token %}
-          <!-- {{form.username.label}} -->
-          {{form.username}}
-
-          <!-- {{form.email.label}} -->
-          {{form.email}}
-
-          <!-- {{form.password1.label}} -->
-          {{form.password1}}
-
-          <!-- {{form.password2.label}} -->
-          {{form.password2}}
-          <!-- <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" /> -->
-          <button>Sign Up</button>
-        </form>
+<div class="container" id="container">
+  <div class="form-container sign-up-container">
+    <form method="POST" action="">
+      <h1>Create Account</h1>
+      <!-- <p> It's quick and easy. </p> -->
+      <div class="social-container">
+        <a href="" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="" class="social"><i class="fa-brands fa-google"></i></a>
+        <a href="#" class="social"><i class="fa-brands fa-twitter"></i></a>
       </div>
-      <div class="form-container sign-in-container">
-        <form method="POST" action="">
-          {% csrf_token %}
+      <span>or use your email for registration</span>
+      <!-- django default form -->
+      {% csrf_token %}
+      <!-- {{form.username.label}} -->
+      {{form.username}}
 
-          {% for message in messages %}
-          <p> {{message}}</p>
-          {% endfor %}
-          <h1>Sign in</h1>
-          <div class="social-container">
-            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <span>or use your account</span>
-          <input type="text" name="username" placeholder="username" class="form-control" />
-          <input type="password" name="password" placeholder="password" class="form-control"/>
-          <a href="{% url 'reset_password' %}">Forgot your password?</a>
-          <button>Sign In</button>
-        </form>
+      <!-- {{form.email.label}} -->
+      {{form.email}}
+
+      <!-- {{form.password1.label}} -->
+      {{form.password1}}
+
+      <!-- {{form.password2.label}} -->
+      {{form.password2}}
+      <button>Sign Up</button>
+    </form>
+  </div>
+  <div class="form-container sign-in-container">
+    <form method="POST" action="">
+      {% csrf_token %} {% for message in messages %}
+      <p>{{message}}</p>
+      {% endfor %}
+      <h1>Sign in</h1>
+      <div class="social-container">
+        <a href="" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="{% provider_login_url 'google'%}?next=/" class="social"
+          ><i class="fa-brands fa-google"></i
+        ></a>
+        <a href="#" class="social"><i class="fa-brands fa-twitter"></i></a>
       </div>
-      <div class="overlay-container">
-        <div class="overlay">
-          <div class="overlay-panel overlay-left">
-            <h2>Welcome Back!</h2>
-            <p>
-              To keep connected with us please login with your personal info
-            </p>
-            <button class="ghost" id="signIn">Sign In</button>
-          </div>
-          <div class="overlay-panel overlay-right">
-            <h2>Hello, Friend!</h2>
-            {{form.errors}}
-            <p>Enter your personal details and start journey with us. It's quick and easy.</p>
-            <button class="ghost" id="signUp">Sign Up</button>
-          </div>
-        </div>
+      <span>or use your account</span>
+      <input
+        type="text"
+        name="username"
+        placeholder="username"
+        class="form-control"
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="password"
+        class="form-control"
+      />
+      <a href="{% url 'reset_password' %}">Forgot your password?</a>
+      <button>Sign In</button>
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h2>Welcome Back!</h2>
+        <p>To keep connected with us please login with your personal info</p>
+        <button class="ghost" id="signIn">Sign In</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h2>Hello, Friend!</h2>
+        {{form.errors}}
+        <p>
+          Enter your personal details and start journey with us. It's quick and
+          easy.
+        </p>
+        <button class="ghost" id="signUp">Sign Up</button>
       </div>
     </div>
-    <script type="text/javascript" src="{% static 'js/form.js'%}"></script>
+  </div>
+</div>
+<script type="text/javascript" src="{% static 'js/form.js'%}"></script>
 
-    <script>
-    // vanilla JS is used to take care of the placeholder values
+<script>
+  // vanilla JS is used to take care of the placeholder values
 
-      //Query All input fields
-      var form_fields = document.getElementsByTagName("input");
-      form_fields[1].placeholder = "username";
-      form_fields[2].placeholder = "email address";
-      form_fields[3].placeholder = "new password";
-      form_fields[4].placeholder = "re-enter password";
+  //Query All input fields
+  var form_fields = document.getElementsByTagName("input");
+  form_fields[1].placeholder = "username";
+  form_fields[2].placeholder = "email address";
+  form_fields[3].placeholder = "new password";
+  form_fields[4].placeholder = "re-enter password";
 
-      for (var field in form_fields) {
-        form_fields[field].className += "form-control";
-      }
-    </script>
-
-
+  for (var field in form_fields) {
+    form_fields[field].className += "form-control";
+  }
+</script>

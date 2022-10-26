@@ -1,6 +1,4 @@
-{% extends 'store/base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'store/base.html' %} {% load static %} {% block content %}
 
 <!-- cart -->
 <main id="main">
@@ -40,27 +38,24 @@
               ><span class="item-quantity">{{item.quantity}}</span> x </strong
             >{{item.product.name}}
           </h1>
-          <!-- <p><strong>Navy, Size 18</strong></p>
-            <p>Product Code - 232321939</p> -->
         </div>
       </div>
       <div class="price">{{item.product.price|floatformat:2}}</div>
       <div class="quantity">
-        <input
-          type="number"
-          value="{{item.quantity}}"
-          min="0"
-          class="quantity-field update-cart"
+        <i
+          data-action="remove"
           data-product="{{item.product.id}}"
+          class="fa-solid fa-minus update-cart"
+        ></i>
+        <span class="quantity-field">{{item.quantity}}</span>
+        <i
           data-action="add"
-          
-        />
-        <button class="update-cart" data-product="{{item.product.id}}" data-action="remove">
-          Remove
-        </button>
+          data-product="{{item.product.id}}"
+          class="fa-solid fa-plus update-cart"
+        ></i>
       </div>
       <div class="subtotal">{{item.get_total}}</div>
-      
+
       {%endfor %}
     </div>
   </div>
@@ -85,9 +80,7 @@
 
       <div class="summary-delivery">
         <select name="delivery-collection" class="summary-delivery-selection">
-          <option value="0" selected="selected">
-            Select Collection or Delivery
-          </option>
+          <option value="0" selected="selected">Delivery</option>
           <option value="collection">Collection</option>
           <option value="first-class">Pay On-delivery</option>
         </select>
@@ -99,11 +92,12 @@
         </div>
       </div>
       <div class="summary-checkout">
-        <a href="{% url 'checkout' %}"><button class="checkout-cta">Go to Secure Checkout</button></a>
+        <a href="{% url 'checkout' %}"
+          ><button class="checkout-cta">Go to Secure Checkout</button></a
+        >
       </div>
     </div>
   </aside>
-
 </main>
 
 <!-- end of cart -->

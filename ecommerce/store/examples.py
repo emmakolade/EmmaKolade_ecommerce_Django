@@ -33,3 +33,12 @@ def loginPage(request):
 
 	context = {}
 	return render(request, 'store/login.html', context)
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
