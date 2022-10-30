@@ -108,3 +108,29 @@ class SubscribedUsers(models.Model):
 		return self.email
 
 
+class ProductDetail(models.Model):
+	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+	# name = models.CharField(max_length=200, null=True)
+	# price = models.DecimalField(max_digits=9, decimal_places=2)
+	# digital = models.BooleanField(default=False, null=True, blank=False) #if the item is digital it doesnt need to be shipped
+	image = models.ImageField(null=True, blank=True)
+
+	im1 = models.ImageField(null=True, blank=True)
+	im2 = models.ImageField(null=True, blank=True)
+	im3 = models.ImageField(null=True, blank=True)
+	im4 = models.ImageField(null=True, blank=True)
+
+
+
+	def __str__(self):
+		return self.name
+
+	@property # allows access to Product as an attribute rather than a method
+	def CollectionsURL(self):
+		try:
+			url = self.image.url
+		except:
+			url = ''
+		return url
+
+

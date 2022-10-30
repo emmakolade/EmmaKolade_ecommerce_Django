@@ -42,3 +42,14 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'emmakolade',
+        'USER': 'postgres',
+        'PASSWORD': 'DjangoPost123#',
+        'HOST': 'database-1.cvq3veqtqxbn.us-west-2.rds.amazonaws.com',
+        'PORT': '5432',
+    }
+}

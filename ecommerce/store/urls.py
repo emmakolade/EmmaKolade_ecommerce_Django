@@ -16,6 +16,8 @@ urlpatterns = [
 	path('men/', views.menPage, name="men"),
 	path('women/', views.womenPage, name="women"),
 
+	path('details/', views.productDetails, name="details"),
+
 	path('subcribe/', views.subscribe, name="subscribe"),
 	path('social/signup/', views.siginRedirect, name="siginRedirect"),
 

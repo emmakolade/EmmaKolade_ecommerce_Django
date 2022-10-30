@@ -1,0 +1,69 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- product details-->
+<section id="pro-details" class="feature-section">
+      <div class="main-pro-image">
+        <div class="small-pro-image">
+          <div class="small-pro-image-col">
+            <img
+              src="/Collections/Shirts/shirt main.jfif"
+              width="100%"
+              class="small-img"
+              alt="prouct-main"
+            />
+          </div>
+          <div class="small-pro-image-col">
+            <img
+              src="/Collections/Shirts/shirt small1.jfif"
+              width="100%"
+              class="small-img"
+              alt="prouct-main"
+            />
+          </div>
+          <div class="small-pro-image-col">
+            <img
+              src="/Collections/Shirts/shrit small2.jfif"
+              width="100%"
+              class="small-img"
+              alt="prouct-main"
+            />
+          </div>
+          <div class="small-pro-image-col">
+            <img
+              src="/Collections/Shirts/4.jpg"
+              width="100%"
+              class="small-img"
+              alt="prouct-main"
+            />
+          </div>
+        </div>
+
+      </div>
+       <div class="big-pro-image">
+          <img
+          src="/Collections/Shirts/shirt main.jfif"
+          width="100%"
+          id="main-img"
+          alt=""
+        />
+        </div>
+      <div class="single-pro-details">
+        <h4>MEN'S SHIRT</h4>
+        <h5>&#36 {{detail.product.price|floatformat:2}}</h5>
+        <h6>QTY.</h6>
+        <!-- <select>
+          <option>SELECT SIZE</option>
+          <option>38</option>
+          <option>39</option>
+          <option>40</option>
+          <option>41</option>
+          <option>42</option>
+        </select> -->
+        <button class="news-btn">ADD TO BAG</button>
+      </div>
+
+</section>
+{% endblock content %}
+<!-- end of product details -->

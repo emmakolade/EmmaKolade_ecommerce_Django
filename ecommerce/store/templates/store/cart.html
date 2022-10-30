@@ -41,17 +41,19 @@
         </div>
       </div>
       <div class="price">{{item.product.price|floatformat:2}}</div>
-      <div class="quantity">
+      <div  class="quantity">
         <i
           data-action="remove"
           data-product="{{item.product.id}}"
           class="fa-solid fa-minus update-cart"
+          id="update-c"
         ></i>
         <span class="quantity-field">{{item.quantity}}</span>
         <i
           data-action="add"
           data-product="{{item.product.id}}"
           class="fa-solid fa-plus update-cart"
+          id="update-c"
         ></i>
       </div>
       <div class="subtotal">{{item.get_total}}</div>

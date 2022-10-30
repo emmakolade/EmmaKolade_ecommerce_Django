@@ -15,7 +15,7 @@
       <div class="product-container">
         {% for product in products %}
         <div class="pro">
-          <img onclick="window.location.href='productdetail.html';" src="{{product.CollectionsURL}}" alt="product 1" />
+          <img onclick="window.location.href='{% url "details" %}';" src="{{product.CollectionsURL}}" alt="products" />
 
           <div class="des">
             <h5>{{product.name}}</h5>

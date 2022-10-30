@@ -226,3 +226,28 @@ def siginRedirect(request):
 	messages.error(request, "something went wrong, it may be that you already have an account")
 	return redirect("home")
 
+
+
+def productDetails(request):
+	details = ProductDetail.objects.all()
+	context = {}
+	return render(request, 'store/productdetail.html', context)
+
+
+# class collections(View):
+# 	def get(self, request):
+# 		data = cartData(request)
+# 		cartItems = data['cartItems']
+# 		products = Product.objects.all()
+# 		context = {'products':products, 'cartItems': cartItems}
+# 		return render(request, 'store/collections.html', context)
+
+# def collections(request):
+
+# 	data = cartData(request)
+# 	cartItems = data['cartItems']
+
+# 	products = Product.objects.all()
+# 	context = {'products':products, 'cartItems': cartItems}
+# 	return render(request, 'store/collections.html', context)
+
