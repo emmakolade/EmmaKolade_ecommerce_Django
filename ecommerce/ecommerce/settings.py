@@ -209,5 +209,5 @@ SITE_ID = 1
 
 
 # Heroku
-django_heroku.settings(locals())
-ALLOWED_HOSTS = ['emmakolade.herokuapp.com', '127.0.0.1']
+# django_heroku.settings(locals())
+# ALLOWED_HOSTS = ['emmakolade.herokuapp.com', '127.0.0.1']

@@ -6,3 +6,36 @@
 <h1>MEN Collections</h1>
 
 {% endblock content%}
+
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+
+<script type="text/javascript">
+            function showMessage() {
+                alert("added to cart");
+            }
+        </script>
+<!-- product section -->
+    <section id="product" class="feature-section">
+      <h2>COLLECTIONS</h2>
+      <p>Collections for Men and Women</p>
+
+      <div class="product-container">
+        {% for product in products %}
+        <div class="pro">
+          <img onclick="window.location.href='{% url "details" %}';" src="{{product.CollectionsURL}}" alt="products" />
+
+          <div class="des">
+            <h5>{{product.name}}</h5>
+            <h4 class="price-tag">&#36 {{product.price|floatformat:2}}</h4>
+          </div>
+          <i onClick="showMessage()" data-product={{product.id}} data-action="add" class="fa-solid fa-bag-shopping product-cart update-cart"></i>
+          <div class="cart-add">add to cart</div>
+        </div>
+        {% endfor %}
+      </div>
+   </section>
+    <!-- end of product section -->
+
+    {% endblock content %}

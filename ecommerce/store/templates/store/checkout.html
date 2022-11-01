@@ -140,18 +140,18 @@
   // if(shipping == 'False'){
   //   document.getElementById('').innerHTML = ''
   // }
-  // var form = document.getElementById("paymentForm");
-  // form.addEventListener("submit", function (e) {
-  //   e.preventDefault(); // prevents the form from performing its normal action
-  //   console.log("form submitted and checkout initiated...");
+  var form = document.getElementById("paymentForm");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // prevents the form from performing its normal action
+    console.log("form submitted and checkout initiated...");
     // payWithPaystack()
-    // submitFormData()
+    submitFormData()
     // document.getElementById('form-btnn').classList.add('hidden')
     // document.getElementById('payment-info').classList.remove('hidden')
-  // });
+  });
   // document.getElementById('form-btnn').addEventListener('click', function(e){
-  //   // e.preventDefault()
-  //   submitFormData()
+    // e.preventDefault()
+    // submitFormData()
   // })
   var total = "{{order.get_cart_total}}";
 
