@@ -41,8 +41,3 @@ If you have any feedback, please reach out to us at emmakolade@gmail.com or [twi
 
 
 # Hi, I'm Akolade! 👋
-
-<div align="center">
-<img src="https://komarev.com/ghpvc/?username=emmakolade&&style=flat-square" align="center" />
-</div>  
-
