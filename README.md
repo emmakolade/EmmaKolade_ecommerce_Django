@@ -6,9 +6,7 @@ and choose the option to either sign up or purchase goods without signing up and
 paypal account or choose the option to pay with their card.
 This is a very personal project, I once had a business named EmmaKolade, that deals with 
 selling authentic handmade leather slippers.
-## Demo
 
-check the demo of the project [here](https://vimeo.com/765693591)
 ## Features
 
 User Authentication and Authorisation: Users can easily create an account on the website, they can also decide not to create an account and go on with business.
