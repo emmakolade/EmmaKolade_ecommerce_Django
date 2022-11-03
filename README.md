@@ -25,6 +25,9 @@ Checkout and Payment: Both authenticated and unauthenticated users can decide to
 
 
 Email Newsletter signup: visitors can sign up for newsletter and their emails and names will be gotten at the backend
+## Demo
+
+check the demo of the project [here](https://vimeo.com/765693591)
 
 ## Tech Stack
 
