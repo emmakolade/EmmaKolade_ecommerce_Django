@@ -37,7 +37,7 @@ This project was built with Python(django) for the backend and HTML, CSS and jav
 
 ## Feedback
 
-If you have any feedback, please reach out to us at emmakolade@gmail.com or [twitter](http://twitter.com/akoladesoft)
+If you have any feedback, please reach out to me at emmakolade@gmail.com or [twitter](http://twitter.com/akoladesoft)
 
 
 # Hi, I'm Akolade! 👋
