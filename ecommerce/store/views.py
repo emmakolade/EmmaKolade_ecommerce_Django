@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from django.contrib.auth.decorators import login_required
 
-from .models import *
+from .models import Customer, Product, Order, OrderItem, ShippingAddress, SubscribedUsers, ProductDetail
 from .utils import cookieCart, cartData, guestOrder
 
 from django.views import View
@@ -46,11 +46,12 @@ def loginRegister(request):
 			if form.is_valid(): # validates the form
 				user = form.save()
 
+				# create a customer profile for the new user
 				username = form.cleaned_data.get('username')
 				Customer.objects.create(
 					user=user,
 					name=user.username
-					) # creates a customer profile whenever they sign up.
+					)
 
 				messages.success(request, 'Account Created Successfully for ' + username )
 			# login
@@ -58,6 +59,7 @@ def loginRegister(request):
 			password = request.POST.get('password')
 			user = authenticate(request, username=username, password=password)
 
+			# If the credentials are valid, log in the user and redirect
 			if user is not None:
 				login(request, user)
 				return redirect('home')
@@ -79,15 +81,6 @@ class collections(View):
 		products = Product.objects.all()
 		context = {'products':products, 'cartItems': cartItems}
 		return render(request, 'store/collections.html', context)
-
-# def collections(request):
-
-# 	data = cartData(request)
-# 	cartItems = data['cartItems']
-
-# 	products = Product.objects.all()
-# 	context = {'products':products, 'cartItems': cartItems}
-# 	return render(request, 'store/collections.html', context)
 
 class cart(View):
 	def get(self, request):
@@ -120,29 +113,39 @@ class checkout(View):
 		return render(request, 'store/checkout.html', context)
 
 def addedItem(request):
+	# parse the request body to extract the product ID and action
 	data = json.loads(request.body)
 	productId = data['productId']
 	action = data['action']
 
-	print('Action:', action)
-	print('productId:', productId)
+	# retrieve the customer associated with the request
 	customer = request.user.customer
+
+	# look up the product from the database using the product ID
 	product = Product.objects.get(id=productId)
-	order, created = Order.objects.get_or_create(customer=customer, complete=False) #to either create and order or get the customer order if it exist.
+
+	# get the customer's existing order or create a new one
+	order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+	# get the order item associated with the specified product or create a new one
 	orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
+	# update the quantity of the order item based on the action specified in the request
 	if action == 'add':
-		orderItem.quantity = (orderItem.quantity + 1)
+		orderItem.quantity += 1
 	elif action == 'remove':
-		orderItem.quantity = (orderItem.quantity - 1)
+		orderItem.quantity -= 1
 
+	# save the updated order item
 	orderItem.save()
 
+	# if the quantity is zero or less, delete the order item
 	if orderItem.quantity <= 0:
 		orderItem.delete()
 
-
+	# return a JSON response indicating that the item was added to the order
 	return JsonResponse('Item was added', safe=False)
+
 
 # to process order and set the value to complete
 # from django.views.decorators.csrf import csrf_exempt
