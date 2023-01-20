@@ -21,130 +21,138 @@ from django.core.exceptions import ValidationError
 
 # Create your views here.
 def home(request):
-	data = cartData(request)
-	cartItems = data['cartItems']
-	order = data['order']
-	items = data['items']
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
-	context = {
-			'items': items,
-			'order': order,
-			'cartItems': cartItems,
-		}
-	return render(request, 'store/index.html', context)
+    context = {
+        'items': items,
+        'order': order,
+        'cartItems': cartItems,
+    }
+    return render(request, 'store/index.html', context)
 
 # @login_required(login_url= 'home')
+
+
 def loginRegister(request):
-	if request.user.is_authenticated:
-		return redirect('home')
-	else:
-		form = SignUpForm()
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        form = SignUpForm()
 
-		if request.method == 'POST':
-			# register/signup
-			form = SignUpForm(request.POST)
-			if form.is_valid(): # validates the form
-				user = form.save()
+        if request.method == 'POST':
+            # register/signup
+            form = SignUpForm(request.POST)
+            if form.is_valid():  # validates the form
+                user = form.save()
 
-				# create a customer profile for the new user
-				username = form.cleaned_data.get('username')
-				Customer.objects.create(
-					user=user,
-					name=user.username
-					)
+                # create a customer profile for the new user
+                username = form.cleaned_data.get('username')
+                Customer.objects.create(
+                    user=user,
+                    name=user.username
+                )
 
-				messages.success(request, 'Account Created Successfully for ' + username )
-			# login
-			username = request.POST.get('username')
-			password = request.POST.get('password')
-			user = authenticate(request, username=username, password=password)
+                messages.success(
+                    request, 'Account Created Successfully for ' + username)
+            # login
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
 
-			# If the credentials are valid, log in the user and redirect
-			if user is not None:
-				login(request, user)
-				return redirect('home')
-			else:
-				messages.info(request, 'credentials invalid')
+            # If the credentials are valid, log in the user and redirect
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.info(request, 'credentials invalid')
 
-		context = {'form': form}
-		return render(request, 'store/loginSignup.html', context)
+        context = {'form': form}
+        return render(request, 'store/loginSignup.html', context)
 
 
 def logoutUser(request):
-	logout(request)
-	return redirect('home')
+    logout(request)
+    return redirect('home')
+
 
 class collections(View):
-	def get(self, request):
-		data = cartData(request)
-		cartItems = data['cartItems']
-		products = Product.objects.all()
-		context = {'products':products, 'cartItems': cartItems}
-		return render(request, 'store/collections.html', context)
+    def get(self, request):
+        data = cartData(request)
+        cartItems = data['cartItems']
+        products = Product.objects.all()
+        context = {'products': products, 'cartItems': cartItems}
+        return render(request, 'store/collections.html', context)
+
 
 class cart(View):
-	def get(self, request):
-		data = cartData(request)
-		cartItems = data['cartItems']
-		order = data['order']
-		items = data['items']
+    def get(self, request):
+        data = cartData(request)
+        cartItems = data['cartItems']
+        order = data['order']
+        items = data['items']
 
-		context = {
-			'items': items,
-			'order': order,
-			'cartItems': cartItems,
-		}
-		return render(request, 'store/cart.html', context)
+        context = {
+            'items': items,
+            'order': order,
+            'cartItems': cartItems,
+        }
+        return render(request, 'store/cart.html', context)
+
 
 class checkout(View):
-	def get(self, request):
+    def get(self, request):
 
-		data = cartData(request)
-		cartItems = data['cartItems']
-		order = data['order']
-		items = data['items']
+        data = cartData(request)
+        cartItems = data['cartItems']
+        order = data['order']
+        items = data['items']
 
+        context = {
+            'items': items,
+            'order': order,
+            'cartItems': cartItems,
+        }
+        return render(request, 'store/checkout.html', context)
 
-		context = {
-			'items': items,
-			'order': order,
-			'cartItems': cartItems,
-		}
-		return render(request, 'store/checkout.html', context)
 
 def addedItem(request):
-	# parse the request body to extract the product ID and action
-	data = json.loads(request.body)
-	productId = data['productId']
-	action = data['action']
+    # parse the request body to extract the product ID and action
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
 
-	# retrieve the customer associated with the request
-	customer = request.user.customer
+    # retrieve the customer associated with the request
+    customer = request.user.customer
 
-	# look up the product from the database using the product ID
-	product = Product.objects.get(id=productId)
+    # look up the product from the database using the product ID
+    product = Product.objects.get(id=productId)
 
-	# get the customer's existing order or create a new one
-	order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    # get the customer's existing order or create a new one
+    order, created = Order.objects.get_or_create(
+        customer=customer, complete=False)
 
-	# get the order item associated with the specified product or create a new one
-	orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+    # get the order item associated with the specified product or create a new one
+    orderItem, created = OrderItem.objects.get_or_create(
+        order=order, product=product)
 
-	# update the quantity of the order item based on the action specified in the request
-	if action == 'add':
-		orderItem.quantity += 1
-	elif action == 'remove':
-		orderItem.quantity -= 1
+    # update the quantity of the order item based on the action specified in the request
+    if action == 'add':
+        orderItem.quantity += 1
+    elif action == 'remove':
+        orderItem.quantity -= 1
 
-	# save the updated order item
-	orderItem.save()
+    # save the updated order item
+    orderItem.save()
 
-	# if the quantity is zero or less, delete the order item
-	if orderItem.quantity <= 0:
-		orderItem.delete()
+    # if the quantity is zero or less, delete the order item
+    if orderItem.quantity <= 0:
+        orderItem.delete()
 
-	# return a JSON response indicating that the item was added to the order
-	return JsonResponse('Item was added', safe=False)
+    # return a JSON response indicating that the item was added to the order
+    return JsonResponse('Item was added', safe=False)
 
 
 # to process order and set the value to complete
@@ -152,89 +160,95 @@ def addedItem(request):
 
 # @csrf_exempt
 def processOrder(request):
-	transaction_id = datetime.datetime.now().timestamp()
-	data = json.loads(request.body)
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer=customer, complete=False) #to either create and order or get the customer order if it exist.
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        # to either create and order or get the customer order if it exist.
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
 
-	else:
-		customer, order = guestOrder(request, data)
+    else:
+        customer, order = guestOrder(request, data)
 
+    total = float(data['form']['total'])
+    order.transaction_id = transaction_id
 
-	total = float(data['form']['total'])
-	order.transaction_id = transaction_id
+    # check if the total from the frontend is the same with backend
+    if total == float(order.get_cart_total):
+        order.complete = True
+    order.save()
 
-	#check if the total from the frontend is the same with backend
-	if total == float(order.get_cart_total):
-		order.complete = True
-	order.save()
+    # value of the shipping
+    if order.shipping == True:
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data['shipping']['address'],
+            # city=data['shipping']['city'],
+            state=data['shipping']['state'],
+            zipcode=data['shipping']['zipcode'],
+        )
 
-	#value of the shipping
-	if order.shipping == True:
-		ShippingAddress.objects.create(
-			customer=customer,
-			order=order,
-			address=data['shipping']['address'],
-			# city=data['shipping']['city'],
-			state=data['shipping']['state'],
-			zipcode=data['shipping']['zipcode'],
-		)
-
-	return JsonResponse('Payment Complete', safe=False)
+    return JsonResponse('Payment Complete', safe=False)
 
 
 def subscribe(request):
-	if request.method == 'POST':
-		name = request.POST.get('name', None)
-		email = request.POST.get('email', None)
+    if request.method == 'POST':
+        name = request.POST.get('name', None)
+        email = request.POST.get('email', None)
 
-		if not name or not email:
-			messages.error(request, "enter an appropraite email to subscribe")
-			return redirect('home')
+        if not name or not email:
+            messages.error(request, "enter an appropraite email to subscribe")
+            return redirect('home')
 
-		if get_user_model().objects.filter(email=email).first():
-			messages.error(request, f"your email {email} has been used.")
-			return redirect(request.META.get("HTTP_REFERER", "home"))
+        if get_user_model().objects.filter(email=email).first():
+            messages.error(request, f"your email {email} has been used.")
+            return redirect(request.META.get("HTTP_REFERER", "home"))
 
-		# checks if the email is not in the subscribed list
-		subscribe_user = SubscribedUsers.objects.filter(email=email).first()
-		if subscribe_user:
-			messages.error(request, f"{email} email address is already subscriber.")
-			return redirect(request.META.get("HTTP_REFERER", "home"))
-		try:
-			validate_email(email)
-		except ValidationError as e:
-			messages.error(request, e.messages[0])
-			return redirect("home")
+        # checks if the email is not in the subscribed list
+        subscribe_user = SubscribedUsers.objects.filter(email=email).first()
+        if subscribe_user:
+            messages.error(
+                request, f"{email} email address is already subscriber.")
+            return redirect(request.META.get("HTTP_REFERER", "home"))
+        try:
+            validate_email(email)
+        except ValidationError as e:
+            messages.error(request, e.messages[0])
+            return redirect("home")
 
-		subscribe_model_instance = SubscribedUsers()
-		subscribe_model_instance.name = name
-		subscribe_model_instance.email = email
-		subscribe_model_instance.save()
-		messages.success(request, f' your email {email} was successfully subscribed to our newsletter!')
-		return redirect(request.META.get("HTTP_REFERER", "home"))
+        subscribe_model_instance = SubscribedUsers()
+        subscribe_model_instance.name = name
+        subscribe_model_instance.email = email
+        subscribe_model_instance.save()
+        messages.success(
+            request, f' your email {email} was successfully subscribed to our newsletter!')
+        return redirect(request.META.get("HTTP_REFERER", "home"))
 
 
 def menPage(request):
-	context = {}
-	return render(request, 'store/men.html', context)
+    context = {}
+    return render(request, 'store/men.html', context)
+
 
 def womenPage(request):
-	context = {}
-	return render(request, 'store/women.html', context)
+    context = {}
+    return render(request, 'store/women.html', context)
 
 # all auth
-def siginRedirect(request):
-	messages.error(request, "something went wrong, it may be that you already have an account")
-	return redirect("home")
 
+
+def siginRedirect(request):
+    messages.error(
+        request, "something went wrong, it may be that you already have an account")
+    return redirect("home")
 
 
 def productDetails(request):
-	details = ProductDetail.objects.all()
-	context = {}
-	return render(request, 'store/productdetail.html', context)
+    details = ProductDetail.objects.all()
+    context = {}
+    return render(request, 'store/productdetail.html', context)
 
 
 # class collections(View):
@@ -253,4 +267,3 @@ def productDetails(request):
 # 	products = Product.objects.all()
 # 	context = {'products':products, 'cartItems': cartItems}
 # 	return render(request, 'store/collections.html', context)
-
